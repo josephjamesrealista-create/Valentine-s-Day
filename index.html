@@ -10,7 +10,7 @@
         #question { font-size: 2.5rem; color: #d63384; margin-bottom: 20px; font-weight: bold; }
         .buttons { display: flex; gap: 20px; justify-content: center; align-items: center; flex-wrap: wrap; }
         #yesBtn { background-color: #28a745; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-size: 1.5rem; transition: 0.1s; z-index: 10; }
-        #noBtn { background-color: #dc3545; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-size: 1.5rem; }
+        #noBtn { background-color: #dc3545; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-size: 1.5rem; transition: 0.1s; }
         img { width: 250px; border-radius: 15px; margin-bottom: 20px; }
     </style>
 </head>
@@ -18,39 +18,25 @@
 
     <div class="container">
         <img id="imageDisplay" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueW41eXF5ZzRreGZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/v4aDfHToYvdfTidqKk/giphy.gif" alt="Cute Bear">
+        
         <h1 id="question">Will you be my Valentine, LOVEE?</h1>
+        
         <div class="buttons">
             <button id="yesBtn">Yes</button>
             <button id="noBtn">No</button>
         </div>
     </div>
 
-    <div id="player"></div>
+    <audio id="bgMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        // Load the YouTube IFrame Player API code asynchronously.
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '0',
-                width: '0',
-                videoId: '0lsJqs7icB4', // This is "Best Part"
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0
-                }
-            });
-        }
-
         const yesBtn = document.getElementById("yesBtn");
         const noBtn = document.getElementById("noBtn");
         const question = document.getElementById("question");
         const imageDisplay = document.getElementById("imageDisplay");
+        const bgMusic = document.getElementById("bgMusic");
 
         const phrases = [
             "No", "Are you sure?", "Really sure?", "Think again!", "Last chance!", 
@@ -66,20 +52,23 @@
         noBtn.addEventListener("click", () => {
             noBtn.innerText = phrases[i];
             i = (i + 1) % phrases.length;
+            
+            // Make the "Yes" button GROW
             yesSize += 0.5;
             yesBtn.style.fontSize = `${yesSize}rem`;
             yesBtn.style.padding = `${yesSize * 10}px ${yesSize * 20}px`;
         });
 
         yesBtn.addEventListener("click", () => {
-            // Play "Best Part"
-            if (player && player.playVideo) {
-                player.playVideo();
-            }
+            // Start the music on user interaction
+            bgMusic.volume = 0.4;
+            bgMusic.play();
 
             // Success message
             question.innerText = "Yay!!! See you on the 14th, LOVEE! ❤️";
             imageDisplay.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmwzYmtuZmF1Ym8zamN6bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/UMon0WU1CmwU5CmYBJ/giphy.gif";
+            
+            // Hide the No button
             noBtn.style.display = "none";
         });
     </script>
