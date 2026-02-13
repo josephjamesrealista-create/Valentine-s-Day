@@ -17,40 +17,18 @@
             font-family: "Pacifico", cursive;
             overflow: hidden;
         }
-        .container { text-align: center; z-index: 10; }
-        #question { font-size: 2.8rem; color: #ad1457; margin-bottom: 20px; text-shadow: 2px 2px white; }
+        .container { text-align: center; }
+        #question { font-size: 2.8rem; color: #ad1457; margin-bottom: 20px; }
         .buttons { display: flex; gap: 20px; justify-content: center; align-items: center; }
-        
-        #yesBtn {
-            background-color: #f06292;
-            color: white;
-            border: none;
-            padding: 15px 32px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        #noBtn {
-            background-color: #880e4f;
-            color: white;
-            border: none;
-            padding: 15px 32px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
-        /* Specific sizing to prevent "Not Available" icon stretch */
-        .gif-container { width: 300px; height: 300px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; }
-        img { max-width: 100%; max-height: 100%; border-radius: 20px; }
+        #yesBtn { background-color: #f06292; color: white; border: none; padding: 15px 32px; border-radius: 50px; cursor: pointer; font-size: 1.5rem; }
+        #noBtn { background-color: #880e4f; color: white; border: none; padding: 15px 32px; border-radius: 50px; cursor: pointer; font-size: 1.5rem; }
+        img { width: 300px; border-radius: 20px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="gif-container">
-            <img id="imageDisplay" src="https://media.tenor.com/j_fB_XwL5XAAAAAi/peach-goma-peach-and-goma.gif" alt="Cute Bear Waiting">
-        </div>
+        <img id="imageDisplay" src="https://media.tenor.com/j_fB_XwL5XAAAAAi/peach-goma-peach-and-goma.gif" alt="Cute Bear">
         <h1 id="question">Will you be my Valentine, LOVEE?</h1>
         <div class="buttons">
             <button id="yesBtn">Yes</button>
@@ -58,50 +36,35 @@
         </div>
     </div>
 
-    <div id="player"></div>
+    <audio id="vdayMusic">
+        <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Ketsa/Raising_Frequency/Ketsa_-_09_-_Lover_Beat.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '0', width: '0', videoId: '0lsJqs7icB4',
-                playerVars: { 'autoplay': 0, 'controls': 0 }
-            });
-        }
-
         const yesBtn = document.getElementById("yesBtn");
         const noBtn = document.getElementById("noBtn");
         const question = document.getElementById("question");
         const imageDisplay = document.getElementById("imageDisplay");
+        const music = document.getElementById("vdayMusic");
 
-        const phrases = [
-            "No", "Are you sure?", "Really sure??", "LOVEE please", 
-            "I'm gonna cry...", "You're breaking my heart ;("
-        ];
-
+        const phrases = ["No", "Are you sure?", "Really sure??", "LOVEE please", "Don't do this...", "I'll be sad...", "Final answer?"];
         let i = 0;
         let yesSize = 1.5;
 
         noBtn.addEventListener("click", () => {
             noBtn.innerText = phrases[i];
             i = (i + 1) % phrases.length;
-            yesSize += 0.7;
+            yesSize += 0.8;
             yesBtn.style.fontSize = `${yesSize}rem`;
             yesBtn.style.padding = `${yesSize * 10}px ${yesSize * 20}px`;
-            
-            // Change image to a sad bear when they keep saying no
             imageDisplay.src = "https://media.tenor.com/S-Kms7vC9mUAAAAi/cute-sad.gif";
         });
 
         yesBtn.addEventListener("click", () => {
-            if (player && player.playVideo) player.playVideo();
+            // PLAY MUSIC
+            music.play().catch(e => console.log("Music blocked:", e));
+
             question.innerText = "Yay!!! See you on the 14th, LOVEE! ❤️";
-            // Happy celebrating bear GIF
             imageDisplay.src = "https://media.tenor.com/mO_9oXgXl-0AAAAi/peach-goma.gif";
             noBtn.style.display = "none";
         });
