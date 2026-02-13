@@ -1,43 +1,36 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Day</title>
+    <title>Be My Valentine?</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #fce4ec;
-            font-family: "Pacifico", cursive;
-            overflow: hidden;
-        }
-        .container { text-align: center; }
-        #question { font-size: 2.8rem; color: #ad1457; margin-bottom: 20px; }
-        .buttons { display: flex; gap: 20px; justify-content: center; align-items: center; }
-        #yesBtn { background-color: #f06292; color: white; border: none; padding: 15px 32px; border-radius: 50px; cursor: pointer; font-size: 1.5rem; }
-        #noBtn { background-color: #880e4f; color: white; border: none; padding: 15px 32px; border-radius: 50px; cursor: pointer; font-size: 1.5rem; }
-        img { width: 300px; border-radius: 20px; margin-bottom: 20px; }
+        body { font-family: 'Pacifico', cursive; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #fce4ec; }
+        .container { text-align: center; padding: 20px; }
+        #question { font-size: 3rem; color: #ad1457; margin-bottom: 20px; }
+        .buttons { display: flex; gap: 20px; justify-content: center; align-items: center; flex-wrap: wrap; }
+        #yesBtn { background-color: #f06292; color: white; border: none; padding: 15px 30px; border-radius: 50px; cursor: pointer; font-size: 1.5rem; transition: 0.2s; z-index: 10; }
+        #noBtn { background-color: #880e4f; color: white; border: none; padding: 15px 30px; border-radius: 50px; cursor: pointer; font-size: 1.5rem; }
+        img { width: 280px; border-radius: 20px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <img id="imageDisplay" src="https://media.tenor.com/j_fB_XwL5XAAAAAi/peach-goma-peach-and-goma.gif" alt="Cute Bear">
+        
         <h1 id="question">Will you be my Valentine, LOVEE?</h1>
+        
         <div class="buttons">
             <button id="yesBtn">Yes</button>
             <button id="noBtn">No</button>
         </div>
     </div>
 
-    <audio id="vdayMusic">
-        <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Ketsa/Raising_Frequency/Ketsa_-_09_-_Lover_Beat.mp3" type="audio/mpeg">
+    <audio id="bgMusic">
+        <source src="music.mp3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -45,9 +38,14 @@
         const noBtn = document.getElementById("noBtn");
         const question = document.getElementById("question");
         const imageDisplay = document.getElementById("imageDisplay");
-        const music = document.getElementById("vdayMusic");
+        const bgMusic = document.getElementById("bgMusic");
 
-        const phrases = ["No", "Are you sure?", "Really sure??", "LOVEE please", "Don't do this...", "I'll be sad...", "Final answer?"];
+        const phrases = [
+            "No", "Are you sure?", "Really sure?", "Think again!", "LOVEE please!", 
+            "Surely not?", "You might regret this!", "Have a heart!", 
+            "Don't be so cold!", "Is that your final answer?", "You're breaking my heart ;("
+        ];
+
         let i = 0;
         let yesSize = 1.5;
 
@@ -57,12 +55,13 @@
             yesSize += 0.8;
             yesBtn.style.fontSize = `${yesSize}rem`;
             yesBtn.style.padding = `${yesSize * 10}px ${yesSize * 20}px`;
+            // Change to sad bear
             imageDisplay.src = "https://media.tenor.com/S-Kms7vC9mUAAAAi/cute-sad.gif";
         });
 
         yesBtn.addEventListener("click", () => {
-            // PLAY MUSIC
-            music.play().catch(e => console.log("Music blocked:", e));
+            // Play the music.mp3
+            bgMusic.play();
 
             question.innerText = "Yay!!! See you on the 14th, LOVEE! ❤️";
             imageDisplay.src = "https://media.tenor.com/mO_9oXgXl-0AAAAi/peach-goma.gif";
